@@ -4,14 +4,14 @@ from numpy import sin, cos, sinh, cosh, pi, mgrid, zeros_like, ones_like
 class hyperbolischer_Zylinder(myobject):
 	def __init__(self,rx,ry,rz):
 		myobject.__init__(self)
-                #############################################################################
+                ################################################################
                 #parameter fuer die flaeche
 		self.u_f, self.v_f = mgrid[-pi:pi:180j,0:1:180j]
                 #alle funktionen fuer die flaeche
 		self.x = lambda u,v: rx*cosh(u)
 		self.y = lambda u,v: ry*sinh(u)
 		self.z = lambda u,v: rz*v
-		#############################################################################
+		################################################################
                 #zeros_like = einfach die arraywerte in 0 umschreiben.
                 #ones_like = einfach die arraywerte in 1 umschreiben.
                 #dxu,dxv sind die Werte der ersten Patielenableitung
