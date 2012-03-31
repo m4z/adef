@@ -4,19 +4,15 @@ from numpy import sin, cos, pi, mgrid, zeros_like, ones_like
 class parabolischer_Zylinder(myobject):
 	def __init__(self,rx,ry,rz):
 		myobject.__init__(self)
-                #############################################################################
+                ################################################################
                 #parameter fuer die flaeche
 		self.u_f, self.v_f = mgrid[-1:1:180j,-1:1:180j]
                 #alle funktionen fuer die flaeche
 		self.x = lambda u,v: rx*u
 		self.y = lambda u,v: ry*u**2
 		self.z = lambda u,v: rz*v
-		#############################################################################
+		################################################################
                 #x,y,z sind die Koordinaten im dreidimensionalem euklidischen Raum
-                #TODO: ueberlegung, ob ich die brauche oder x_f,y_f,z_f reichen
-##                 self.x = lambda u,v: rx*cos(u)*sin(v)
-##                 self.y = lambda u,v: ry*sin(u)*sin(v)
-##                 self.z = lambda u,v: rz*cos(v)
                 #ones_like = einfach die arraywerte in 1 umschreiben.
                 #dxu,dxv sind die Werte der ersten Patielenableitung
                 self.dxu = lambda u,v: rx*ones_like(u)
