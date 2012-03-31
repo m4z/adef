@@ -4,15 +4,14 @@ from numpy import sin, cos, sinh, cosh, pi, mgrid, zeros_like, ones_like
 class einschaliges_Hyperboloid(myobject):
 	def __init__(self,rx,ry,rz):
 		myobject.__init__(self)
-                #############################################################################
+                ################################################################
                 #parameter fuer die flaeche
-##                 u, v = mgrid[-pi:mypi:0.01, -1:1:0.01]
 		self.u_f, self.v_f = mgrid[0:2*pi:180j,-1:1:180j]
                 #alle funktionen fuer die flaeche
 		self.x = lambda u,v: rx*cos(u)*cosh(v)
 		self.y = lambda u,v: ry*sin(u)*cosh(v)
 		self.z = lambda u,v: rz*sinh(v)
-		#############################################################################
+		################################################################
                 #zeros_like = einfach die arraywerte in 0 umschreiben.
                 #ones_like = einfach die arraywerte in 1 umschreiben.
                 #dxu,dxv sind die Werte der ersten Patielenableitung
