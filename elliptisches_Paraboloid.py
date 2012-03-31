@@ -4,14 +4,14 @@ from numpy import sin, cos, pi, mgrid, zeros_like, ones_like
 class elliptisches_Paraboloid(myobject):
 	def __init__(self,rx,ry,rz):
 		myobject.__init__(self)
-                #############################################################################
+                ################################################################
                 #parameter fuer die flaeche
 		self.u_f, self.v_f = mgrid[0:2*pi:180j,0:1:180j]
                 #alle funktionen fuer die flaeche
 		self.x = lambda u,v: rx*cos(u)*v
 		self.y = lambda u,v: ry*sin(u)*v
 		self.z = lambda u,v: rz*v**2
-		#############################################################################
+		################################################################
                 #x,y,z sind die Koordinaten im dreidimensionalem euklidischen Raum
                 #TODO: ueberlegung, ob ich die brauche oder x_f,y_f,z_f reichen
                 #zeros_like = einfach die arraywerte in 0 umschreiben.
