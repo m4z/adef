@@ -4,9 +4,8 @@ from numpy import sin, cos, pi, mgrid, zeros_like, ones_like
 class elliptischer_Kegel(myobject):
 	def __init__(self,rx,ry,rz):
 		myobject.__init__(self)
-                #############################################################################
+                ################################################################
                 #parameter fuer die flaeche
-##                 self.u, self.v = mgrid[-pi:pi:180j,0:1:180j]
 		self.u_f, self.v_f = mgrid[0:2*pi:180j,0:1:180j]
                 #alle funktionen fuer die flaeche
 		self.x = lambda u,v: rx*cos(u)*v
