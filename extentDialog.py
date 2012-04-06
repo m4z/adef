@@ -3,7 +3,7 @@ from traits.api import HasTraits, Range, Button, Bool, Enum, Array, Float, Int, 
     on_trait_change
 from traitsui.api import View, Item
 from myutil import punkt
-from calculation import tckp_berechnen#, flaeche_berechnen,x_f,y_f,z_f
+from calculation import tckp_berechnen#, flaeche_berechnen, x_f, y_f, z_f
 from numpy import array
 from enthought.mayavi import mlab
 from parabolischer_Zylinder import parabolischer_Zylinder
@@ -21,17 +21,17 @@ class ExtentDialog(HasTraits):
     """ A dialog to graphical adjust the extents of a filter.
     """
     Flaechen = Enum('parabolischer Zylinder',
-			'elliptischer Zylinder',
-                        'hyperbolischer Zylinder',
-			'elliptisches Paraboloid',
-			'hyperbolisches Paraboloid',
-                        'elliptischer Kegel',
-                        'Ellipsoid',
-                        'einschaliges Hyperboloid',
-                        'zweischaliges Hyperboloid',
-                        'Torus',)
+                    'elliptischer Zylinder',
+                    'hyperbolischer Zylinder',
+                    'elliptisches Paraboloid',
+                    'hyperbolisches Paraboloid',
+                    'elliptischer Kegel',
+                    'Ellipsoid',
+                    'einschaliges Hyperboloid',
+                    'zweischaliges Hyperboloid',
+                    'Torus',)
 
-    Skalierung = Array(float,(1,3),array([[1,1,1]]))
+    Skalierung = Array(float, (1, 3), array([[1, 1, 1]]))
     Flaeche = Button('berechnen')
     # Data extents
     Kurvenpunkt = Range(0, 100, 0)
@@ -60,14 +60,14 @@ class ExtentDialog(HasTraits):
 
 
     def __init__(self, myobj):
-	self.myobj = myobj
-	HasTraits.__init__(self)
+        self.myobj = myobj
+        HasTraits.__init__(self)
 
     
     @on_trait_change('Kurve')
     def update_kurve(self):
-	#eigentlich sollte ich hier wahrscheinlich die 100 kurvenpunkte berechnen lassen
-        #und die dazugehoerigen daten, wie tangente, ...
+        # eigentlich sollte ich hier wahrscheinlich die 100 kurvenpunkte
+        # berechnen lassen und die dazugehoerigen daten, wie tangente, ...
         self.myobj.fig.children[2:] = []
         self.myobj.kurve_berechnen()
 
@@ -78,25 +78,45 @@ class ExtentDialog(HasTraits):
         self.myobj.fig.children[0:] = []
         ###########################################
         if self.Flaechen == 'parabolischer Zylinder':
-            self.myobj = parabolischer_Zylinder(self.Skalierung[0][0],self.Skalierung[0][1],self.Skalierung[0][2])
+            self.myobj = parabolischer_Zylinder(self.Skalierung[0][0],
+                                                self.Skalierung[0][1],
+                                                self.Skalierung[0][2])
         elif self.Flaechen == 'elliptischer Zylinder':
-            self.myobj = elliptischer_Zylinder(self.Skalierung[0][0],self.Skalierung[0][1],self.Skalierung[0][2])
+            self.myobj = elliptischer_Zylinder(self.Skalierung[0][0],
+                                               self.Skalierung[0][1],
+                                               self.Skalierung[0][2])
         elif self.Flaechen == 'hyperbolischer Zylinder':
-            self.myobj = hyperbolischer_Zylinder(self.Skalierung[0][0],self.Skalierung[0][1],self.Skalierung[0][2])
+            self.myobj = hyperbolischer_Zylinder(self.Skalierung[0][0],
+                                                 self.Skalierung[0][1],
+                                                 self.Skalierung[0][2])
         elif self.Flaechen == 'elliptisches Paraboloid':
-            self.myobj = elliptisches_Paraboloid(self.Skalierung[0][0],self.Skalierung[0][1],self.Skalierung[0][2])
+            self.myobj = elliptisches_Paraboloid(self.Skalierung[0][0],
+                                                 self.Skalierung[0][1],
+                                                 self.Skalierung[0][2])
         elif self.Flaechen == 'hyperbolisches Paraboloid':
-            self.myobj = hyperbolisches_Paraboloid(self.Skalierung[0][0],self.Skalierung[0][1],self.Skalierung[0][2])
+            self.myobj = hyperbolisches_Paraboloid(self.Skalierung[0][0],
+                                                   self.Skalierung[0][1],
+                                                   self.Skalierung[0][2])
         elif self.Flaechen == 'elliptischer Kegel':
-            self.myobj = elliptischer_Kegel(self.Skalierung[0][0],self.Skalierung[0][1],self.Skalierung[0][2])
+            self.myobj = elliptischer_Kegel(self.Skalierung[0][0],
+                                            self.Skalierung[0][1],
+                                            self.Skalierung[0][2])
         elif self.Flaechen == 'Ellipsoid':
-            self.myobj = Ellipsoid(self.Skalierung[0][0],self.Skalierung[0][1],self.Skalierung[0][2])
+            self.myobj = Ellipsoid(self.Skalierung[0][0],
+                                   self.Skalierung[0][1],
+                                   self.Skalierung[0][2])
         elif self.Flaechen == 'einschaliges Hyperboloid':
-            self.myobj = einschaliges_Hyperboloid(self.Skalierung[0][0],self.Skalierung[0][1],self.Skalierung[0][2])
+            self.myobj = einschaliges_Hyperboloid(self.Skalierung[0][0],
+                                                  self.Skalierung[0][1],
+                                                  self.Skalierung[0][2])
         elif self.Flaechen == 'zweischaliges Hyperboloid':
-            self.myobj = zweischaliges_Hyperboloid(self.Skalierung[0][0],self.Skalierung[0][1],self.Skalierung[0][2])
+            self.myobj = zweischaliges_Hyperboloid(self.Skalierung[0][0],
+                                                   self.Skalierung[0][1],
+                                                   self.Skalierung[0][2])
         elif self.Flaechen == 'Torus':
-            self.myobj = Torus(self.Skalierung[0][0],self.Skalierung[0][1],self.Skalierung[0][2])
+            self.myobj = Torus(self.Skalierung[0][0],
+                               self.Skalierung[0][1],
+                               self.Skalierung[0][2])
         ###########################################
         self.myobj.flaeche_berechnen()
         self.Flaeche_anzeigen = bool('true')
@@ -105,13 +125,13 @@ class ExtentDialog(HasTraits):
     
     @on_trait_change('Flaeche_anzeigen')
     def update_flaeche_anzeigen(self):
-	self.myobj.mesh.set(visible=self.Flaeche_anzeigen)
+        self.myobj.mesh.set(visible=self.Flaeche_anzeigen)
 
     @on_trait_change('Dreibein')
     def update_dreibein(self):
         self.myobj.tangente.set(visible=self.Dreibein)
-	self.myobj.hauptnormale.set(visible=self.Dreibein)
-	self.myobj.binormale.set(visible=self.Dreibein)
+        self.myobj.hauptnormale.set(visible=self.Dreibein)
+        self.myobj.binormale.set(visible=self.Dreibein)
 
     @on_trait_change('Tangente')
     def update_tangente(self):
@@ -178,7 +198,7 @@ class ExtentDialog(HasTraits):
     
     @on_trait_change('Kurvenpunkt')
     def update_kurvenpunkt(self):
-	punkt(self.myobj, self.Kurvenpunkt)
+        punkt(self.myobj, self.Kurvenpunkt)
 
     #die bezeichnung der extra-gui.
     #die x_min, ... muessen anscheinend auch die variablennamen sein.
