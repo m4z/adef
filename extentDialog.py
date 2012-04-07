@@ -1,11 +1,23 @@
 # A dialog to edit a range interactively and propagate it to the filter
-from traits.api import HasTraits, Range, Button, Bool, Enum, Array, Float, Int, Instance, \
+#
+# W:  2: Unused import Float
+# W:  2: Unused import Instance
+# W:  2: Unused import Int
+#from traits.api import HasTraits, Range, Button, Bool, Enum, Array, Float, \
+#    Int, Instance, on_trait_change
+from traits.api import HasTraits, Range, Button, Bool, Enum, Array, \
     on_trait_change
 from traitsui.api import View, Item
 from myutil import punkt
-from calculation import tckp_berechnen#, flaeche_berechnen, x_f, y_f, z_f
+# W:  6: Unused import tckp_berechnen
+#from calculation import tckp_berechnen#, flaeche_berechnen, x_f, y_f, z_f
 from numpy import array
-from enthought.mayavi import mlab
+# is this needed here when it is already in main.py?
+# W: 10: Unused import mlab
+#try:
+#    from enthought.mayavi import mlab
+#except ImportError:
+#    from mayavi import mlab
 from parabolischer_Zylinder import parabolischer_Zylinder
 from elliptischer_Zylinder import elliptischer_Zylinder
 from hyperbolischer_Zylinder import hyperbolischer_Zylinder
@@ -57,13 +69,10 @@ class ExtentDialog(HasTraits):
     Tangentialebene = Bool()
 
 
-
-
     def __init__(self, myobj):
         self.myobj = myobj
         HasTraits.__init__(self)
 
-    
     @on_trait_change('Kurve')
     def update_kurve(self):
         # eigentlich sollte ich hier wahrscheinlich die 100 kurvenpunkte
@@ -171,7 +180,8 @@ class ExtentDialog(HasTraits):
     
     @on_trait_change('geodaetische_Kruemmung')
     def update_geodaetischekruemmung(self):
-        self.myobj.geodaetischekruemmung.set(visible=self.geodaetische_Kruemmung)
+        self.myobj.geodaetischekruemmung.set(
+            visible=self.geodaetische_Kruemmung)
     
     @on_trait_change('Ebenen')
     def update_ebenen(self):
@@ -190,7 +200,8 @@ class ExtentDialog(HasTraits):
     
     @on_trait_change('rektifizierende_Ebene')
     def update_rektifizierende(self):
-        self.myobj.rektifizierendeebene.set(visible=self.rektifizierende_Ebene)
+        self.myobj.rektifizierendeebene.set(
+            visible=self.rektifizierende_Ebene)
     
     @on_trait_change('Tangentialebene')
     def update_tangentialebene(self):
@@ -218,12 +229,15 @@ class ExtentDialog(HasTraits):
                 Item(name='Flaechen_Normale', label='Flaechennormale'),
                 Item(name='Kruemmung', label='Flaechenkruemmung'),
                 Item(name='Normalkruemmung'),
-                Item(name='geodaetische_Kruemmung', label='geodaetische Kruemmung'),
+                Item(name='geodaetische_Kruemmung',
+                     label='geodaetische Kruemmung'),
                 '_',
                 Item(name='Ebenen'),
                 Item(name='Schmiegebene'),
                 Item(name='Normalebene'),
-                Item(name='rektifizierende_Ebene', label='rektifizierende Ebene'),
-                Item(name='Tangentialebene', label='Tangentialebene der Flaeche'),
+                Item(name='rektifizierende_Ebene',
+                     label='rektifizierende Ebene'),
+                Item(name='Tangentialebene',
+                     label='Tangentialebene der Flaeche'),
                 '_',
                 'Kurvenpunkt', title='My GUI', resizable=True)
