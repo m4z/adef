@@ -1,9 +1,10 @@
 # Create a set of points, with given density
 #zweite zeile brauche ich damit ich lib beim picker aufrufen kann als np.lib
 #
-# TODO: get rid of the * import
 import numpy as np
 from numpy import *
+# TODO: get rid of the * import
+#from numpy import ...
 try:
     from enthought.mayavi import mlab
 except ImportError:

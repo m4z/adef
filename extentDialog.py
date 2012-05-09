@@ -32,6 +32,8 @@ from Torus import Torus
 class ExtentDialog(HasTraits):
     """ A dialog to graphical adjust the extents of a filter.
     """
+    # extents/surfaces (unsure about correct translation).
+    # this variable holds the user-selected extent.
     Flaechen = Enum('parabolischer Zylinder',
                     'elliptischer Zylinder',
                     'hyperbolischer Zylinder',
@@ -43,11 +45,13 @@ class ExtentDialog(HasTraits):
                     'zweischaliges Hyperboloid',
                     'Torus',)
 
+    # TODO: Skalierung
     Skalierung = Array(float, (1, 3), array([[1, 1, 1]]))
+    # this ill-named variable holds the "calculate" button.
     Flaeche = Button('berechnen')
     # Data extents
     Kurvenpunkt = Range(0, 100, 0)
-    #Kurve berechnen
+    # Kurve berechnen (calculate curvature)
     Kurve = Button('berechnen')
     #Buttons sollen einen style='button', 'radio', 'checkbox'
     Flaeche_anzeigen = Bool()
@@ -73,6 +77,7 @@ class ExtentDialog(HasTraits):
         self.myobj = myobj
         HasTraits.__init__(self)
 
+    # curve
     @on_trait_change('Kurve')
     def update_kurve(self):
         # eigentlich sollte ich hier wahrscheinlich die 100 kurvenpunkte
@@ -80,6 +85,7 @@ class ExtentDialog(HasTraits):
         self.myobj.fig.children[2:] = []
         self.myobj.kurve_berechnen()
 
+    # extent/surface
     @on_trait_change('Flaeche')
     def update_flaeche(self):
         #diese if-abfrage brauch ich spaeter um zu differenzieren welche
@@ -131,33 +137,39 @@ class ExtentDialog(HasTraits):
         self.Flaeche_anzeigen = bool('true')
         self.Kurvenpunkt = 0
 
-    
+
+    # show surface
     @on_trait_change('Flaeche_anzeigen')
     def update_flaeche_anzeigen(self):
         self.myobj.mesh.set(visible=self.Flaeche_anzeigen)
 
+    # triad/tripod
     @on_trait_change('Dreibein')
     def update_dreibein(self):
         self.myobj.tangente.set(visible=self.Dreibein)
         self.myobj.hauptnormale.set(visible=self.Dreibein)
         self.myobj.binormale.set(visible=self.Dreibein)
 
+    # tangent
     @on_trait_change('Tangente')
     def update_tangente(self):
         self.myobj.tangente.set(visible=self.Tangente)
-    
+
+    # second deduction
     @on_trait_change('zweite_Ableitung')
     def update_ableitung2(self):
         self.myobj.ableitung2.set(visible=self.zweite_Ableitung)
-    
+
+    # main/principal normal
     @on_trait_change('Hauptnormale')
     def update_hauptnormale(self):
         self.myobj.hauptnormale.set(visible=self.Hauptnormale)
-    
+
+    # binormal
     @on_trait_change('Binormale')
     def update_binormale(self):
         self.myobj.binormale.set(visible=self.Binormale)
-    
+
     @on_trait_change('Flaechen_Tangente_u')
     def update_tangente_fu(self):
         self.myobj.tangente_fu.set(visible=self.Flaechen_Tangente_u)
@@ -165,69 +177,87 @@ class ExtentDialog(HasTraits):
     @on_trait_change('Flaechen_Tangente_v')
     def update_tangente_fv(self):
         self.myobj.tangente_fv.set(visible=self.Flaechen_Tangente_v)
-    
+
     @on_trait_change('Flaechen_Normale')
     def update_normale_f(self):
         self.myobj.normale_f.set(visible=self.Flaechen_Normale)
-    
+
+    # normal curvature
     @on_trait_change('Normalkruemmung')
     def update_normalkruemmung(self):
         self.myobj.normalkruemmung.set(visible=self.Normalkruemmung)
-    
+
+    # curvature
     @on_trait_change('Kruemmung')
     def update_kruemmung(self):
         self.myobj.kruemmung.set(visible=self.Kruemmung)
-    
+
+    # geodetic curvature
     @on_trait_change('geodaetische_Kruemmung')
     def update_geodaetischekruemmung(self):
         self.myobj.geodaetischekruemmung.set(
             visible=self.geodaetische_Kruemmung)
-    
+
+    # planes
     @on_trait_change('Ebenen')
     def update_ebenen(self):
         self.myobj.normalebene.set(visible=self.Ebenen)
         self.myobj.schmiegebene.set(visible=self.Ebenen)
         self.myobj.rektifizierendeebene.set(visible=self.Ebenen)
         self.myobj.tangentialebene_f.set(visible=self.Ebenen)
-    
+
+    # osculating plane
     @on_trait_change('Schmiegebene')
     def update_schmiegebene(self):
         self.myobj.schmiegebene.set(visible=self.Schmiegebene)
-    
+
     @on_trait_change('Normalebene')
     def update_normalebene(self):
         self.myobj.normalebene.set(visible=self.Normalebene)
-    
+
+    # TODO rectifying plane?
+    # (tangent + binormal + perpendicular to principal normal)
     @on_trait_change('rektifizierende_Ebene')
     def update_rektifizierende(self):
         self.myobj.rektifizierendeebene.set(
             visible=self.rektifizierende_Ebene)
-    
+
+    # tangent plane
     @on_trait_change('Tangentialebene')
     def update_tangentialebene(self):
         self.myobj.tangentialebene_f.set(visible=self.Tangentialebene)
-    
+
+    # plot-point on the curve
     @on_trait_change('Kurvenpunkt')
     def update_kurvenpunkt(self):
         punkt(self.myobj, self.Kurvenpunkt)
 
     #die bezeichnung der extra-gui.
     #die x_min, ... muessen anscheinend auch die variablennamen sein.
-    view = View(Item(name='Flaechen', label = 'Flaechen'),
-                Item(name='Skalierung', label='Skalierung x,y,z'),
-                Item(name='Flaeche', label='Flaeche'),
-                Item(name='Flaeche_anzeigen', label='Flaeche anzeigen'),
+    view = View(Item(name='Flaechen',
+                     label = 'Flaechen'),
+                Item(name='Skalierung',
+                     label='Skalierung x,y,z'),
+                Item(name='Flaeche',
+                     label='Flaeche'),
+                Item(name='Flaeche_anzeigen',
+                     label='Flaeche anzeigen'),
                 '_',
                 Item(name='Kurve'),
                 Item(name='Dreibein'),
                 Item(name='Tangente'),
-                Item(name='zweite_Ableitung', label='zweite Ableitung'),
+                Item(name='zweite_Ableitung',
+                     label='zweite Ableitung'),
                 Item(name='Hauptnormale'),
                 Item(name='Binormale'),
-                Item(name='Flaechen_Tangente_u', label='Flaechentangente u'),
-                Item(name='Flaechen_Tangente_v', label='Flaechentangente v'),
-                Item(name='Flaechen_Normale', label='Flaechennormale'),
-                Item(name='Kruemmung', label='Flaechenkruemmung'),
+                Item(name='Flaechen_Tangente_u',
+                     label='Flaechentangente u'),
+                Item(name='Flaechen_Tangente_v',
+                     label='Flaechentangente v'),
+                Item(name='Flaechen_Normale',
+                     label='Flaechennormale'),
+                Item(name='Kruemmung',
+                     label='Flaechenkruemmung'),
                 Item(name='Normalkruemmung'),
                 Item(name='geodaetische_Kruemmung',
                      label='geodaetische Kruemmung'),
@@ -240,4 +270,6 @@ class ExtentDialog(HasTraits):
                 Item(name='Tangentialebene',
                      label='Tangentialebene der Flaeche'),
                 '_',
-                'Kurvenpunkt', title='My GUI', resizable=True)
+                'Kurvenpunkt',
+                title='My GUI',
+                resizable=True)
