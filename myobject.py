@@ -145,27 +145,36 @@ class myobject(object):
                                        self.dzv(u(t, tckp), v(t, tckp))]) \
                                 * dv(t, tckp)
     #Das muesste die richtige zweite Ableitung sein fuer die Kurve.
+    # TODO:
+    #  File "extentDialog.py", line 86, in update_kurve
+    #    self.myobj.kurve_berechnen()
+    #  File "myobject.py", line 298, in kurve_berechnen
+    #    self.d, self.e, self.f = self.dKtt(self.t, self.tckp)
+    #  File "myobject.py", line 164, in <lambda>
+    #    * dv(t, tckp) + \
+    #ValueError: setting an array element with a sequence.
+    #
     dKtt = lambda self, t, tckp: array([self.dxuu(u(t, tckp), v(t, tckp)),
                                         self.dyuu(u(t, tckp), v(t, tckp)),
-                                        self.dzuu(u(t, tckp), v(t, tckp))]) \
-                                 * du(t, tckp) + \
+                                        self.dzuu(u(t, tckp), v(t, tckp))]) * \
+                                 du(t, tckp) + \
                                  2*(array([self.dxuv(u(t, tckp), v(t, tckp)),
                                            self.dyuv(u(t, tckp), v(t, tckp)),
                                            self.dzuv(u(t, tckp),
-                                                     v(t, tckp))])) \
-                                 * du(t, tckp) * dv(t, tckp) + \
+                                                     v(t, tckp))])) * \
+                                 du(t, tckp) * dv(t, tckp) + \
                                  array([self.dxu(u(t, tckp), v(t, tckp)),
                                         self.dyu(u(t, tckp), v(t, tckp)),
-                                        self.dzu(u(t, tckp), v(t, tckp))]) \
-                                 * duu(t, tckp) + \
+                                        self.dzu(u(t, tckp), v(t, tckp))]) * \
+                                 duu(t, tckp) + \
                                  array([self.dxvv(u(t, tckp), v(t, tckp)),
                                         self.dyvv(u(t, tckp), v(t, tckp)),
-                                        self.dzvv(u(t, tckp), v(t, tckp))]) \
-                                 * dv(t, tckp) + \
+                                        self.dzvv(u(t, tckp), v(t, tckp))]) * \
+                                 dv(t, tckp) + \
                                  array([self.dxv(u(t, tckp), v(t, tckp)),
                                         self.dyv(u(t, tckp), v(t, tckp)),
-                                        self.dzv(u(t, tckp), v(t, tckp))]) \
-                                 * dvv(t, tckp)
+                                        self.dzv(u(t, tckp), v(t, tckp))]) * \
+                                 dvv(t, tckp)
     
     
     #Ks ist die Kurvenfunktion

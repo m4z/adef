@@ -6,17 +6,17 @@ except ImportError:
 from numpy import array
 
 def ebene(x, y, z, u1, v1, w1, u2, v2, w2, rgb, ii, myname):
-    px1, py1, pz1 = [u1[ii]+u2[ii]+x[ii], x[ii]],
-                    [v1[ii]+v2[ii]+y[ii], y[ii]],
+    px1, py1, pz1 = [u1[ii]+u2[ii]+x[ii], x[ii]], \
+                    [v1[ii]+v2[ii]+y[ii], y[ii]], \
                     [w1[ii]+w2[ii]+z[ii], z[ii]]
-    px2, py2, pz2 = [u1[ii]-u2[ii]+x[ii], x[ii]],
-                    [v1[ii]-v2[ii]+y[ii], y[ii]],
+    px2, py2, pz2 = [u1[ii]-u2[ii]+x[ii], x[ii]], \
+                    [v1[ii]-v2[ii]+y[ii], y[ii]], \
                     [w1[ii]-w2[ii]+z[ii], z[ii]]
-    px3, py3, pz3 = [-u1[ii]-u2[ii]+x[ii], x[ii]],
-                    [-v1[ii]-v2[ii]+y[ii], y[ii]],
+    px3, py3, pz3 = [-u1[ii]-u2[ii]+x[ii], x[ii]], \
+                    [-v1[ii]-v2[ii]+y[ii], y[ii]], \
                     [-w1[ii]-w2[ii]+z[ii], z[ii]]
-    px4, py4, pz4 = [-u1[ii]+u2[ii]+x[ii], x[ii]],
-                    [-v1[ii]+v2[ii]+y[ii], y[ii]],
+    px4, py4, pz4 = [-u1[ii]+u2[ii]+x[ii], x[ii]], \
+                    [-v1[ii]+v2[ii]+y[ii], y[ii]], \
                     [-w1[ii]+w2[ii]+z[ii], z[ii]]
     px = array([px1, px2, px3, px4, px1])
     py = array([py1, py2, py3, py4, py1])
