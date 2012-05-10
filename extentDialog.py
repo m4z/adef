@@ -7,7 +7,10 @@ from traitsui.api import View, Item
 from myutil import punkt
 from calculation import tckp_berechnen#, flaeche_berechnen,x_f,y_f,z_f
 from numpy import array
-from enthought.mayavi import mlab
+try:
+    from enthought.mayavi import mlab
+except ImportError:
+    from mayavi import mlab
 from parabolischer_Zylinder import parabolischer_Zylinder
 from elliptischer_Zylinder import elliptischer_Zylinder
 from hyperbolischer_Zylinder import hyperbolischer_Zylinder

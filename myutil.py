@@ -1,4 +1,7 @@
-from enthought.mayavi import mlab
+try:
+    from enthought.mayavi import mlab
+except ImportError:
+    from mayavi import mlab
 from numpy import array
 
 def ebene(x,y,z,u1,v1,w1,u2,v2,w2,rgb,ii,myname):

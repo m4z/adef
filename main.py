@@ -3,7 +3,10 @@
 #zweite zeile brauche ich damit ich lib beim picker aufrufen kann als np.lib
 import numpy as np
 from numpy import *
-from enthought.mayavi import mlab
+try:
+    from enthought.mayavi import mlab
+except ImportError:
+    from mayavi import mlab
 from scipy.interpolate import splprep, splev
 from extentDialog import ExtentDialog
 from myutil import ebene, punkt

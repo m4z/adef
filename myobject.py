@@ -1,5 +1,8 @@
 from numpy import mod, lib, r_, zeros
-from enthought.mayavi import mlab
+try:
+    from enthought.mayavi import mlab
+except ImportError:
+    from mayavi import mlab
 ## from calculation import tckp_berechnen
 from calculation import * #bogenlaenge,vektorlaenge,normalisiere,kreuzprodukt...
 from myutil import ebene
