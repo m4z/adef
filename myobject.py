@@ -1,11 +1,11 @@
 from numpy import mod, lib, r_, zeros
-# is this needed here when it is already in main.py?
 try:
     from enthought.mayavi import mlab
 except ImportError:
     from mayavi import mlab
 ## from calculation import tckp_berechnen
 #bogenlaenge,vektorlaenge,normalisiere,kreuzprodukt...
+# TODO
 from calculation import *
 from myutil import ebene
 
@@ -49,7 +49,7 @@ class myobject(object):
     xnew = None
     ynew = None
     znew = None
-    
+
     #alle koeffizienten fuer die vektorenausrichtung
     #TODO: soll ich auch die zwischenwerte (vor der normalisierung)
     # hier mit ausnehmen?
@@ -83,7 +83,10 @@ class myobject(object):
     x_p = array([0., 0., 0., 0.]) #None #array([0, 0, 0, 0])
     y_p = array([0., 0., 0., 0.]) #None #array([0, 0, 0, 0])
     z_p = array([0., 0., 0., 0.]) #None #array([0, 0, 0, 0])
-    global_i = 0 #None #0
+    #
+    # this holds the number of user-selected plot-points.
+    # should maybe renamed to pointcnt or something like it.
+    global_i = 0
     #alle variablen zur skalierung der flaeche
     skalierung_x = None
     skalierung_y = None
@@ -130,12 +133,15 @@ class myobject(object):
     dKtt_laenge = None #laenge des Kruemmungsvektors
     dKs_werte = None
     dKss_werte = None
-          
-    #K ist die Kurvenfunktion
+
+    # K ist die Kurvenfunktion
+    # TODO explain
+    #print "mo.K: %s %s" % (t, tckp) # will be None on init
     K = lambda self, t, tckp: array([self.x(u(t, tckp), v(t, tckp)),
                                      self.y(u(t, tckp), v(t, tckp)),
                                      self.z(u(t, tckp), v(t, tckp))])
     #dKt ist die erste Ableitung der Kurvenfunktion.
+    #print "mo.dKt: %s %s" % (t, tckp) # will be None on init
     dKt = lambda self, t, tckp: array([self.dxu(u(t, tckp), v(t, tckp)),
                                        self.dyu(u(t, tckp), v(t, tckp)),
                                        self.dzu(u(t, tckp), v(t, tckp))]) \
@@ -153,7 +159,7 @@ class myobject(object):
     #  File "myobject.py", line 164, in <lambda>
     #    * dv(t, tckp) + \
     #ValueError: setting an array element with a sequence.
-    #
+    #print "mo.dKtt: %s %s" % (t, tckp) # will be None on init
     dKtt = lambda self, t, tckp: array([self.dxuu(u(t, tckp), v(t, tckp)),
                                         self.dyuu(u(t, tckp), v(t, tckp)),
                                         self.dzuu(u(t, tckp), v(t, tckp))]) * \
@@ -175,9 +181,9 @@ class myobject(object):
                                         self.dyv(u(t, tckp), v(t, tckp)),
                                         self.dzv(u(t, tckp), v(t, tckp))]) * \
                                  dvv(t, tckp)
-    
-    
-    #Ks ist die Kurvenfunktion
+
+
+    #Ks ist die Kurvenfunktion (TODO Unterschied zu K?)
     Ks = lambda self, t, tckp: array([self.x(u(t, tckp), v(t, tckp)),
                                      self.y(u(t, tckp), v(t, tckp)),
                                      self.z(u(t, tckp), v(t, tckp))])
@@ -214,7 +220,7 @@ class myobject(object):
                                         self.dyv(u(t, tckp), v(t, tckp)),
                                         self.dzv(u(t, tckp), v(t, tckp))]) \
                                  * dvv(t, tckp)
-    
+
     #dKu ist die erste Ableitung der Kurvenfunktion nach dem Parameter u.
     dKu = lambda self, t, tckp: array([self.dxu(u(t, tckp), v(t, tckp)),
                                        self.dyu(u(t, tckp), v(t, tckp)),
@@ -253,8 +259,10 @@ class myobject(object):
                                       self.dzv(u(t, tckp), v(t, tckp))])**2
 
     def __init__(self):
+        # set TODO on white background.
         self.fig = mlab.figure(1, bgcolor=(1, 1, 1))
-    
+
+    # TODO
     def flaeche_berechnen(self):
         self.x_werte = self.x(self.u_f, self.v_f)
         self.y_werte = self.y(self.u_f, self.v_f)
@@ -270,23 +278,30 @@ class myobject(object):
         ############################################
         self.fig.on_mouse_pick(
             lambda picker_obj: self.picker_callback(picker_obj))
-    
+
+    # TODO
     def kurve_berechnen(self):
+        # TODO
+        #print "mo.kb: %s, %s, %s" % (self.x_p, self.y_p, self.z_p)
         self.kurvenpunkte_4 = mlab.points3d(self.x_p, self.y_p, self.z_p,
                                             mode='sphere',
                                             color=(0, 0, 0),
                                             scale_factor=0.02)
         #TODO: ich muss tckp_berechnen die richtigen werte uebergeben
         #also nicht index_u sondern u_f4
+        # TODO: Test auf None schlauer machen.
+        #if self.u_f4 is not None:
         self.u_f4 = [self.u_f[self.index_u[0]][self.index_v[0]],
                      self.u_f[self.index_u[1]][self.index_v[1]],
                      self.u_f[self.index_u[2]][self.index_v[2]],
                      self.u_f[self.index_u[3]][self.index_v[3]]]
+        #if self.v_f4 is not None:
         self.v_f4 = [self.v_f[self.index_u[0]][self.index_v[0]],
                      self.v_f[self.index_u[1]][self.index_v[1]],
                      self.v_f[self.index_u[2]][self.index_v[2]],
                      self.v_f[self.index_u[3]][self.index_v[3]]]
         self.tckp = tckp_berechnen(self.u_f4, self.v_f4, 3, 3.0)
+        print "...danach"
         #t ist der parameter der kurve
         self.t = r_[0:1:101j]
         self.t_index = r_[0:101:1]
@@ -304,6 +319,12 @@ class myobject(object):
         self.a_n, self.b_n, self.c_n = normalisiere(self.a, self.b, self.c)
         #Das ist der Vektor der zweiten Ableitung der Splinekurve.
         #Dieser Vektor liegt ebenfalls in der Tangentialebene.
+        # TODO: fails somewhere here:
+        #     File "myobject.py", line 307, in kurve_berechnen
+        #       self.d, self.e, self.f = self.dKtt(self.t, self.tckp)
+        #     File "myobject.py", line 173, in <lambda>
+        #       dv(t, tckp) + \
+        #     ValueError: setting an array element with a sequence.
         self.d, self.e, self.f = self.dKtt(self.t, self.tckp)
         self.d_n, self.e_n, self.f_n = normalisiere(self.d, self.e, self.f)
         #Das ist der Binormalenvektor(blau).
@@ -372,7 +393,7 @@ class myobject(object):
         self.v1, self.v2, self.v3 = self.dKv(self.t, self.tckp)
         self.v1_n, self.v2_n, self.v3_n = normalisiere(
             self.v1, self.v2, self.v3)
-        
+
         #Normalenvektor zur Flaeche.
         self.uv1, self.uv2, self.uv3 = kreuzprodukt(
             self.u1, self.u2, self.u3, self.v1, self.v2, self.v3)
@@ -408,7 +429,7 @@ class myobject(object):
             (1, 1, 0), 0, 'Tangentialebene der Flaeche')
         #Fundamentalgroessen der zweiten Fundamentalform
         self.n = array([self.uv1_n, self.uv2_n, self.uv3_n])
-        
+
         self.A = self.A_n(self.t, self.tckp) * self.n
         self.B1 = self.B1_n(self.t, self.tckp) * self.n
         self.B2 = self.B2_n(self.t, self.tckp) * self.n
@@ -430,7 +451,7 @@ class myobject(object):
                      2 * (self.H[0] + self.H[1] + self.H[2]) \
                      * self.du_werte * self.dv_werte + \
                      (self.I[0] + self.I[1] + self.I[2]) * self.dv_2)
-        
+
         self.kn_nf = self.k_nf*self.n
         self.normalkruemmung = mlab.quiver3d(self.xnew[0],
                                              self.ynew[0],
@@ -454,7 +475,7 @@ class myobject(object):
         self.geodaetischekruemmung = mlab.quiver3d(self.xnew[0],
             self.ynew[0], self.znew[0], self.kg[0][0], self.kg[1][0],
             self.kg[2][0], color=(1, 0, 1), name='geodaetische Kruemmung')
-        
+
         # TODO: geodaetische Kruemmung berechnen und dann die Summe der
         # beiden Krummungen berechnen.
         # ob ich die geodaetische Kruemmung nach dem spatprodukt rechnen kann?
@@ -473,7 +494,7 @@ class myobject(object):
         self.rektifizierendeebene._hideshow()
         self.tangentialebene_f._hideshow()
         self.geodaetischekruemmung._hideshow()
-    
+
     def picker_callback(self, picker_obj):
         picked = picker_obj.actors
         if self.mesh.actor.actor._vtk_obj in [o._vtk_obj for o in picked]:
@@ -481,10 +502,11 @@ class myobject(object):
             # dataset. GetPointId return the index in this array.
             x_, y_ = lib.index_tricks.unravel_index(picker_obj.point_id,
                                                     self.u_f.shape)
-            print "Data indices: %i, %i" % (x_, y_)
+            #print "Data indices: %i, %i" % (x_, y_)
             self.cursor3d.mlab_source.set(x=self.x_werte[x_, y_],
                                           y=self.y_werte[x_, y_],
                                           z=self.z_werte[x_, y_])
+            # TODO nicer printing
             print self.cursor3d.mlab_source.get('points')
             self.index_u[self.global_i] = x_
             self.index_v[self.global_i] = y_
@@ -495,6 +517,6 @@ class myobject(object):
             self.x_p[self.global_i] = self.cursor3d.mlab_source.x
             self.y_p[self.global_i] = self.cursor3d.mlab_source.y
             self.z_p[self.global_i] = self.cursor3d.mlab_source.z
-            print 'punkt:'
-            print self.global_i
+            #print 'Punkt: %i' % self.global_i
+            print 'Punkt: %i (%i, %i)' % (self.global_i, x_, y_)
             self.global_i = mod(self.global_i+1, 4)
