@@ -102,6 +102,30 @@ def eckpunkte_ebene(x, y, z, u1, v1, w1, u2, v2, w2):
     return epx, epy, epz
 
 #von kurve_berechnen in tckp_berechnen umbenannt.
+# TODO: tckp=?
 def tckp_berechnen(u_werte, v_werte, grad, glaettung):
-    tckp, nix = splprep([u_werte, v_werte], k=grad, s=glaettung, nest=-1)
+    # scipy.interpolate.splprep(x, w=None, u=None, ub=None, ue=None, k=3,
+    #   task=0, s=None, t=None, full_output=0, nest=None, per=0, quiet=1)
+    #
+    # first arg: A list of sample vector arrays representing the curve.
+    # k: Degree of the spline.
+    # s: A smoothing condition.
+    # nest: An over-estimate of the total number of knots of the spline.
+    #
+    # returns a tuple (t,c,k), and stuff we are not interested in.
+    #print "splprep: %s, %s, %s" % ([u_werte, v_werte], grad, glaettung)
+    # TODO: why nest=-1?
+    #tckp, _, _, _, _ = splprep([u_werte, v_werte], k=grad, s=glaettung, nest=-1)
+    tckp, _ = splprep([u_werte, v_werte], k=grad, s=glaettung)
+    print "tckp: %s" % tckp
+    # returns something like:
+    # tckp:
+    # [
+    #  array([ 0.,  0.,  0.,  0.,  1.,  1.,  1.,  1.]),
+    #  [
+    #   array([ 0.91061453, -4.82518883,  4.35490374, -0.8547486 ]),
+    #   array([ 0.62011173, 1.30721272, -0.835382  , -0.81005587])
+    #  ],
+    #  3
+    # ]
     return tckp
