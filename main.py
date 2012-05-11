@@ -1,18 +1,33 @@
-# Create a set of points, with given density
-#zweite zeile brauche ich damit ich lib beim picker aufrufen kann als np.lib
 #
-import numpy as np
-from numpy import *
+# Create a set of points, with given density
+#
+# NumPy is the fundamental package for scientific computing with Python.
+#import numpy as np
+#from numpy import *
 # TODO: get rid of the * import
 #from numpy import ...
-try:
-    from enthought.mayavi import mlab
-except ImportError:
-    from mayavi import mlab
+
+# mlab is/does TODO
+#try:
+#    from enthought.mayavi import mlab
+#except ImportError:
+#    from mayavi import mlab
+
+# splprep: spline representation interpolation
+# splev:   spline evaluation
 from scipy.interpolate import splprep, splev
+
+# extentDialog represents our adef GUI element
 from extentDialog import ExtentDialog
+
+# myutil (TODO rename adef.util or so) does/is TODO
 from myutil import ebene, punkt
-from calculation import * #K,dKt,dKtt,normalisiere,kreuzprodukt
+
+# TODO
+# K,dKt,dKtt,normalisiere,kreuzprodukt
+from calculation import *
+
+# myobject does/is TODO
 from myobject import myobject
 
 myobj = myobject()
