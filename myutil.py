@@ -1,11 +1,13 @@
-# is this needed here when it is already in main.py?
 try:
     from enthought.mayavi import mlab
 except ImportError:
     from mayavi import mlab
 from numpy import array
 
+# TODO: this needs to be objectified.
+# TODO: what is ii?
 def ebene(x, y, z, u1, v1, w1, u2, v2, w2, rgb, ii, myname):
+    # TODO: i *assume* p<dim><n> are the spanning points of the extent.
     px1, py1, pz1 = [u1[ii]+u2[ii]+x[ii], x[ii]], \
                     [v1[ii]+v2[ii]+y[ii], y[ii]], \
                     [w1[ii]+w2[ii]+z[ii], z[ii]]
@@ -18,6 +20,7 @@ def ebene(x, y, z, u1, v1, w1, u2, v2, w2, rgb, ii, myname):
     px4, py4, pz4 = [-u1[ii]+u2[ii]+x[ii], x[ii]], \
                     [-v1[ii]+v2[ii]+y[ii], y[ii]], \
                     [-w1[ii]+w2[ii]+z[ii], z[ii]]
+    # TODO it seems mlab.mesh works with one array per dimension.
     px = array([px1, px2, px3, px4, px1])
     py = array([py1, py2, py3, py4, py1])
     pz = array([pz1, pz2, pz3, pz4, pz1])
@@ -26,6 +29,9 @@ def ebene(x, y, z, u1, v1, w1, u2, v2, w2, rgb, ii, myname):
 def punkt(myobj, ii):
     if myobj is not None:
         #Alle Vektoren
+        # TODO what happens here? it seems all the attributes/traits? of
+        # one (the current?) plot-point are calculated (TODO rename?).
+        # TODO objectify; accessors.
         if myobj.tangente is not None:
             myobj.tangente.mlab_source.set(x=myobj.xnew[ii],
                                            y=myobj.ynew[ii],
@@ -84,7 +90,7 @@ def punkt(myobj, ii):
                                                     u=myobj.kg[0][ii],
                                                     v=myobj.kg[1][ii],
                                                     w=myobj.kg[2][ii])
-        #Alle Ebenen
+        #Alle Ebenen (TODO: what's "..."?)
         #pxn[..., 0] = pxn[:, :, 0] = pxn.T[0].T
         myobj.normalebene.mlab_source.set(x=myobj.epxn[..., ii],
                                           y=myobj.epyn[..., ii],
