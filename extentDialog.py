@@ -95,6 +95,9 @@ class ExtentDialog(HasTraits):
     # curve
     @on_trait_change('Kurve')
     def update_kurve(self):
+        if self.Flaechen == 'parabolischer Zylinder' or \
+           self.Flaechen == 'hyperbolisches Paraboloid':
+            print "Warning: Curve calculation will fail with this extent!"
         # eigentlich sollte ich hier wahrscheinlich die 100 kurvenpunkte
         # berechnen lassen und die dazugehoerigen daten, wie tangente, ...
         #
