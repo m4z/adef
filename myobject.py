@@ -7,6 +7,20 @@ except ImportError:
 #bogenlaenge,vektorlaenge,normalisiere,kreuzprodukt...
 # TODO
 from calculation import *
+# vektorlaenge
+# vektorausrichtung
+# positivevektorausrichtung
+# func
+# sf
+# bogenlaenge
+# func2
+# sf2
+# bogenlaenge2
+# normalisiere
+# kreuzprodukt
+# spatprodukt
+# eckpunkte_ebene
+# tckp_berechnen
 from myutil import ebene
 
 class myobject(object):
