@@ -30,6 +30,13 @@ from calculation import *
 # myobject does/is TODO
 from myobject import myobject
 
+# TODO: Certain (T)VTK versions contain a bug that results in this error
+# on mayavi startup:
+#     QWidget: Must construct a QApplication before a QPaintDevice
+#     Aborted
+#
+# The fix found at https://github.com/enthought/mayavi/issues/24
+# does not work on openSUSE 12.1/Tumbleweed.
 myobj = myobject()
 
 extent_dialog = ExtentDialog(myobj=myobj)
