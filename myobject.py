@@ -1,49 +1,45 @@
+# TODO: lib? r_? zeros? (zeros unused?)
 from numpy import mod, lib, r_, zeros
 try:
     from enthought.mayavi import mlab
 except ImportError:
     from mayavi import mlab
-## from calculation import tckp_berechnen
-#bogenlaenge,vektorlaenge,normalisiere,kreuzprodukt...
 # TODO
-from calculation import *
-# vektorlaenge
-# vektorausrichtung
-# positivevektorausrichtung
-# func
-# sf
-# bogenlaenge
-# func2
-# sf2
-# bogenlaenge2
-# normalisiere
-# kreuzprodukt
-# spatprodukt
-# eckpunkte_ebene
-# tckp_berechnen
+#from calculation import *
+# unused: vektorlaenge, vektorausrichtung, positivevektorausrichtung, func
+# sf, func2, sf2, bogenlaenge2, spatprodukt, eckpunkte_ebene
+from calculation import bogenlaenge, normalisiere, kreuzprodukt, tckp_berechnen
 from myutil import ebene
 
 class myobject(object):
+    # the figure/canvas.
     fig = None
-    #fuer die flaeche
+    # the (mlab) mesh of the extent.
     mesh = None
     u_f = None
     v_f = None
-    x_werte = None #x_f(u_f, v_f)
-    y_werte = None #y_f(u_f, v_f)
-    z_werte = None #z_f(u_f, v_f)
-    #die zu anzuzeigende kurve
+    # x_f(u_f, v_f), y_f(u_f, v_f), and z_f(u_f, v_f).
+    # 2d arrays giving the positions of the vertices of the surface.
+    x_werte = None
+    y_werte = None
+    z_werte = None
+
+    # die anzuzeigende kurve.
     kurve = None
+    # TODO: "time" parameter used for the curvature and possibly more.
     t = None
     t_index = None
+    # TODO.
     s = None
+    # TODO.
     tckp = None
-    #fuer die 4 kurvenpunkte, aus den ich die kurve berechne
+    # die 4 kurvenpunkte, aus denen ich die kurve berechne (the plot-points).
     kurvenpunkte_4 = None
-    #damit ich tckp richtig berechnen kann
+    # damit ich tckp richtig berechnen kann.
     u_f4 = None
     v_f4 = None
-    #alle anzuzeigende vektoren
+
+    # die anzuzeigende vektoren.
     tangente = None
     ableitung2 = None
     hauptnormale = None
@@ -54,12 +50,14 @@ class myobject(object):
     normalkruemmung = None
     kruemmung = None
     geodaetischekruemmung = None
-    #alle anzuzeigenden ebenen
+
+    # die anzuzeigenden ebenen.
     normalebene = None
     schmiegebene = None
     rektifizierendeebene = None
     tangentialebene_f = None
-    #alle kurvenpunkte
+
+    # die kurvenpunkte.
     xnew = None
     ynew = None
     znew = None
@@ -148,13 +146,15 @@ class myobject(object):
     dKs_werte = None
     dKss_werte = None
 
-    # K ist die Kurvenfunktion
+    # K ist die Kurvenfunktion (Notation 2.1).
     # TODO explain
+    # K(x(t), y(t), z(t)) = x(t)*e_x + y(t)*e_y + z(t)*e_z
+    #
     #print "mo.K: %s %s" % (t, tckp) # will be None on init
     K = lambda self, t, tckp: array([self.x(u(t, tckp), v(t, tckp)),
                                      self.y(u(t, tckp), v(t, tckp)),
                                      self.z(u(t, tckp), v(t, tckp))])
-    #dKt ist die erste Ableitung der Kurvenfunktion.
+    # dKt ist die erste Ableitung der Kurvenfunktion.
     #print "mo.dKt: %s %s" % (t, tckp) # will be None on init
     dKt = lambda self, t, tckp: array([self.dxu(u(t, tckp), v(t, tckp)),
                                        self.dyu(u(t, tckp), v(t, tckp)),
@@ -274,6 +274,7 @@ class myobject(object):
 
     def __init__(self):
         # set TODO on white background.
+        # figure(handle, backgroundcolor)
         self.fig = mlab.figure(1, bgcolor=(1, 1, 1))
 
     # TODO
@@ -281,21 +282,25 @@ class myobject(object):
         self.x_werte = self.x(self.u_f, self.v_f)
         self.y_werte = self.y(self.u_f, self.v_f)
         self.z_werte = self.z(self.u_f, self.v_f)
+        # a semi-sexy gray extent.
         self.mesh = mlab.mesh(self.x_werte,
                               self.y_werte,
                               self.z_werte,
                               color=(0.6, 0.6, 0.6))
+        # TODO this was previously undefined.
+        # Plots glyphs (like points) at the position of the supplied data.
+        # TODO why is this pointing at 0,0,0?
         self.cursor3d = mlab.points3d(0., 0., 0.,
                                 mode='sphere',
                                 color=(0, 0, 0),
                                 scale_factor=0.03)
-        ############################################
+        # we would like to catch mouse clicks, please.
         self.fig.on_mouse_pick(
             lambda picker_obj: self.picker_callback(picker_obj))
 
     # TODO
     def kurve_berechnen(self):
-        # TODO
+        # TODO update(?)
         #print "mo.kb: %s, %s, %s" % (self.x_p, self.y_p, self.z_p)
         self.kurvenpunkte_4 = mlab.points3d(self.x_p, self.y_p, self.z_p,
                                             mode='sphere',
