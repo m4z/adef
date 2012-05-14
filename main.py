@@ -1,17 +1,6 @@
 #
 # Create a set of points, with given density
 #
-# NumPy is the fundamental package for scientific computing with Python.
-#import numpy as np
-#from numpy import *
-# TODO: get rid of the * import
-#from numpy import ...
-
-# mlab is/does TODO
-#try:
-#    from enthought.mayavi import mlab
-#except ImportError:
-#    from mayavi import mlab
 
 # splprep: spline representation interpolation
 # splev:   spline evaluation
@@ -23,9 +12,10 @@ from extentDialog import ExtentDialog
 # myutil (TODO rename adef.util or so) does/is TODO
 from myutil import ebene, punkt
 
-# TODO
+# TODO: most likely unneeded.
+# TODO: what does this next comment mean?
 # K,dKt,dKtt,normalisiere,kreuzprodukt
-from calculation import *
+#from calculation import *
 
 # myobject does/is TODO
 from myobject import myobject
@@ -40,6 +30,7 @@ from myobject import myobject
 myobj = myobject()
 
 extent_dialog = ExtentDialog(myobj=myobj)
+#
 # We need to use 'edit_traits' and not 'configure_traits()' as we do
 # not want to start the GUI event loop (the call to mlab.show())
 # at the end of the script will do it.
