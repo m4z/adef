@@ -97,13 +97,16 @@ class ExtentDialog(HasTraits):
     def update_kurve(self):
         if self.Flaechen == 'parabolischer Zylinder' or \
            self.Flaechen == 'hyperbolisches Paraboloid':
-            print "Warning: Curve calculation will fail with this extent!"
-        # eigentlich sollte ich hier wahrscheinlich die 100 kurvenpunkte
-        # berechnen lassen und die dazugehoerigen daten, wie tangente, ...
-        #
-        # if the curve button is pressed, do TODO and show the curve.
-        self.myobj.fig.children[2:] = []
-        self.myobj.kurve_berechnen()
+            # TODO: painting the curve should still be possible.
+            print "Curve calculation is not possible with extent %s!" % \
+                    self.Flaechen
+        else:
+            # eigentlich sollte ich hier wahrscheinlich die 100 kurvenpunkte
+            # berechnen lassen und die dazugehoerigen daten, wie tangente, ...
+            #
+            # if the curve button is pressed, do TODO and show the curve.
+            self.myobj.fig.children[2:] = []
+            self.myobj.kurve_berechnen()
 
     # extent/surface
     @on_trait_change('Flaeche')
