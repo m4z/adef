@@ -1,27 +1,28 @@
 from scipy.interpolate import splev, splprep
 from scipy.integrate import quad
-from numpy import sin, cos, zeros_like, ones_like, array, sqrt, cross, abs
+#from numpy import sin, cos, zeros_like, ones_like, array, sqrt, cross, abs
+from numpy import zeros_like, array, sqrt, cross, abs
 
 #############################################################################
-#alle funktionen fuer die flaeche
+# alle funktionen fuer die flaeche
 ## x_f = lambda u_f,v_f: cos(u_f)*sin(v_f)
 ## y_f = lambda u_f,v_f: sin(u_f)*sin(v_f)
 ## z_f = lambda u_f,v_f: cos(v_f)
 #############################################################################
-#alle funktionen fuer die kurve und die dazugehoerigen funktionen
+# alle funktionen fuer die kurve und die dazugehoerigen funktionen
 u = lambda t, tckp : splev(t, tckp, 0)[0]
 v = lambda t, tckp : splev(t, tckp, 0)[1]
-#du,dv sind die ersten Ableitungen der Flaechenparameter.
+# du,dv sind die ersten Ableitungen der Flaechenparameter.
 du = lambda t, tckp : splev(t, tckp, 1)[0]
 dv = lambda t, tckp : splev(t, tckp, 1)[1]
-#x,y,z sind die Koordinaten im dreidimensionalem euklidischen Raum
+# x,y,z sind die Koordinaten im dreidimensionalem euklidischen Raum
 
 duu = lambda t, tckp : splev(t, tckp, 2)[0]
 duv = lambda t, tckp : zeros_like(duu(t, tckp))
 dvu = lambda t, tckp : zeros_like(dvv(t, tckp))
 dvv = lambda t, tckp : splev(t, tckp, 2)[1]
 
-#Laenge eines Vektors (vector length).
+# Laenge eines Vektors (vector length).
 def vektorlaenge(x, y, z):
     laenge = sqrt(x**2 + y**2 + z**2)
     return laenge
