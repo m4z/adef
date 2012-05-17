@@ -26,7 +26,7 @@ class elliptischer_Zylinder(myobject):
         self.dxvu = lambda u, v: zeros_like(u)
         self.dxuv = lambda u, v: zeros_like(v)
         self.dxvv = lambda u, v: zeros_like(v)
-        
+
         self.dyuu = lambda u, v: ry*(-sin(u))
         self.dyvu = lambda u, v: zeros_like(u)
         self.dyuv = lambda u, v: zeros_like(v)

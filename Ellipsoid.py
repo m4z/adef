@@ -19,23 +19,23 @@ class Ellipsoid(myobject):
         #dxu,dxv sind die Werte der ersten Patielenableitung
         self.dxu = lambda u, v: rx*(-sin(u))*sin(v)
         self.dxv = lambda u, v: rx*cos(u)*cos(v)
-        
+
         self.dyu = lambda u, v: ry*cos(u)*sin(v)
         self.dyv = lambda u, v: ry*sin(u)*cos(v)
-        
+
         self.dzu = lambda u, v: zeros_like(u)
         self.dzv = lambda u, v: rz*(-sin(v))
-        
+
         self.dxuu = lambda u, v: rx*(-cos(u))*sin(v)
         self.dxvu = lambda u, v: rx*(-sin(u))*cos(v)
         self.dxuv = lambda u, v: rx*(-sin(u))*cos(v)
         self.dxvv = lambda u, v: rx*cos(u)*(-sin(v))
-        
+
         self.dyuu = lambda u, v: ry*(-sin(u))*sin(v)
         self.dyvu = lambda u, v: ry*cos(u)*cos(v)
         self.dyuv = lambda u, v: ry*cos(u)*cos(v)
         self.dyvv = lambda u, v: ry*sin(u)*(-sin(v))
-        
+
         self.dzuu = lambda u, v: zeros_like(u)
         self.dzvu = lambda u, v: zeros_like(u)
         self.dzuv = lambda u, v: zeros_like(v)

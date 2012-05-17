@@ -19,23 +19,23 @@ class elliptisches_Paraboloid(myobject):
         #dxu,dxv sind die Werte der ersten Patielenableitung
         self.dxu = lambda u, v: rx*(-sin(u))*v
         self.dxv = lambda u, v: rx*cos(u)
-        
+
         self.dyu = lambda u, v: ry*cos(u)*v
         self.dyv = lambda u, v: ry*sin(u)
-        
+
         self.dzu = lambda u, v: zeros_like(u)
-        self.dzv = lambda u, v: rz*2*v                
-        
+        self.dzv = lambda u, v: rz*2*v
+
         self.dxuu = lambda u, v: rx*(-cos(u))*v
         self.dxvu = lambda u, v: rx*(-sin(u))
         self.dxuv = lambda u, v: rx*(-sin(u))
         self.dxvv = lambda u, v: zeros_like(v)
-        
+
         self.dyuu = lambda u, v: ry*(-sin(u))*v
         self.dyvu = lambda u, v: ry*sin(u)
         self.dyuv = lambda u, v: ry*sin(u)
         self.dyvv = lambda u, v: zeros_like(v)
-        
+
         self.dzuu = lambda u, v: zeros_like(u)
         self.dzvu = lambda u, v: zeros_like(u)
         self.dzuv = lambda u, v: zeros_like(v)

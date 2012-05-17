@@ -18,23 +18,23 @@ class Torus(myobject):
         #dxu,dxv sind die Werte der ersten Patielenableitung
         self.dxu = lambda u, v: rx*r2*(-sin(u))*sin(v)
         self.dxv = lambda u, v: rx*(r1+r2*cos(u))*cos(v)
-        
+
         self.dyu = lambda u, v: ry*r2*(-sin(u))*cos(v)
         self.dyv = lambda u, v: ry*(r1+r2*cos(u))*(-sin(v))
-        
+
         self.dzu = lambda u, v: rz*r2*cos(u)
         self.dzv = lambda u, v: zeros_like(v)
-        
+
         self.dxuu = lambda u, v: rx*r2*(-cos(u))*sin(v)
         self.dxvu = lambda u, v: rx*r2*(-sin(u))*cos(v)
         self.dxuv = lambda u, v: rx*r2*(-sin(u))*cos(v)
         self.dxvv = lambda u, v: rx*(r1+r2*cos(u))*(-sin(v))
-        
+
         self.dyuu = lambda u, v: ry*r2*(-cos(u))*cos(v)
         self.dyvu = lambda u, v: ry*r2*(-sin(u))*(-sin(v))
         self.dyuv = lambda u, v: ry*r2*(-sin(u))*(-sin(v))
         self.dyvv = lambda u, v: ry*(r1+r2*cos(u))*(-cos(v))
-        
+
         self.dzuu = lambda u, v: rz*r2*(-sin(u))
         self.dzvu = lambda u, v: zeros_like(v)
         self.dzuv = lambda u, v: zeros_like(v)
