@@ -222,6 +222,19 @@ class ExtentDialog(HasTraits):
     # show or hide curvature.
     @on_trait_change('Kruemmung')
     def update_kruemmung(self):
+        # Exception occurred in traits notification handler for object:
+        #     <extentDialog.ExtentDialog object at 0xcbab68c>, trait:
+        #     Kruemmung, old value: False, new value: True
+        # Traceback (most recent call last):
+        #   File "/usr/lib/python2.7/dist-packages/traits/trait_notifiers.py",
+        #       line 505, in rebind_call_0
+        #     self.dispatch( getattr( self.object(), self.name ) )
+        #   File "/usr/lib/python2.7/dist-packages/traits/trait_notifiers.py",
+        #       line 448, in dispatch
+        #     handler( *args )
+        #   File "extentDialog.py", line 225, in update_kruemmung
+        #     self.myobj.kruemmung.set(visible=self.Kruemmung)
+        # AttributeError: 'NoneType' object has no attribute 'set'
         self.myobj.kruemmung.set(visible=self.Kruemmung)
 
     # show or hide geodetic curvature.
